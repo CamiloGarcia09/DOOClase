@@ -1,6 +1,8 @@
 package co.edu.uco.pch.data.dao.entity.concrete.azuresql;
 
 import co.edu.uco.pch.crosscutting.exceptions.custom.DataPCHException;
+import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
+import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.edu.uco.pch.data.dao.entity.CiudadDAO;
 import co.edu.uco.pch.data.dao.entity.concrete.SqlConnection;
 import co.edu.uco.pch.entity.CiudadEntity;
@@ -32,15 +34,17 @@ public class CiudadAzureSqlDAO extends SqlConnection implements CiudadDAO {
 
             sentenciaSqlPreparada.executeUpdate();
 
+        //Tarea no quemar los mensajes, agregarlos al catalogo de mensajes, para usar el sistema
+            // de mensajeria que ya creamos en clases pasadas
         }catch (final SQLException exception){
-            var mensajeUsuario = "Se ha presentado un problema tratando de crear la ciudad \"${1}\" por favor intente de nuevo y si el problema persiste contacte al administrador";
-            var mensajeTecnico = "Se ha presentado una excepcion de tipo SQLException tratando de realizar el insert de la ciudad \"${1}\" en la tabla \"Pais\" " +
-                    "de la base de datos Azure SQL. Para mas detalles revise de forma completa la excepcion raiz presentada... ";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00024);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00025);
             throw new DataPCHException(mensajeTecnico, mensajeUsuario, exception);
 
         }catch (final Exception exception){
-            var mensajeUsuario = "Se ha presentado un problema tratando de crear la ciudad \"${1}\" por favor intente de nuevo y si el problema persiste contacte al administrador";
-            var mensajeTecnico = "Se ha presentado un problema inesperado con una excepcion de tipo Exception ";
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00026);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00027);
+            throw new DataPCHException(mensajeTecnico, mensajeUsuario, exception);
         }
     }
 

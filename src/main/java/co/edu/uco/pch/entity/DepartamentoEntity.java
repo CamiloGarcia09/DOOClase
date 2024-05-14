@@ -1,5 +1,6 @@
 package co.edu.uco.pch.entity;
 
+import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
 import co.edu.uco.pch.dto.PaisDTO;
 
@@ -9,7 +10,7 @@ import java.util.UUID;
 public final class DepartamentoEntity {
     private UUID id;
     private String nombre;
-    private PaisDTO pais;
+    private PaisEntity pais;
 
     public DepartamentoEntity() {
         super();
@@ -39,17 +40,19 @@ public final class DepartamentoEntity {
         return nombre;
     }
 
+    //Aplicamos Helpers
     public final DepartamentoEntity setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final PaisDTO getPais() {
+    public final PaisEntity getPais() {
         return pais;
     }
 
+    //Aplicamos Helpers
     public DepartamentoEntity setPais (final PaisEntity pais) {
-        this.pais = pais;
+        this.pais = ObjectHelper.getObjectHelper().getDefaultValue(pais, new PaisEntity());
         return this;
     }
 }

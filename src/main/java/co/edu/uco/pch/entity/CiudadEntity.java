@@ -11,13 +11,13 @@ import java.util.UUID;
 public final class CiudadEntity {
     private UUID id;
     private String nombre;
-    private DepartamentoDTO departamento;
+    private DepartamentoEntity departamento;
 
     public CiudadEntity() {
         super();
     }
 
-    public CiudadEntity(final UUID id, final String nombre, final DepartamentoDTO departamento) {
+    public CiudadEntity(final UUID id, final String nombre, final DepartamentoEntity departamento) {
         setId(id);
         setNombre(nombre);
         setDepartamento(departamento);
@@ -46,12 +46,12 @@ public final class CiudadEntity {
         return this;
     }
 
-    public final DepartamentoDTO getDepartamento() {
+    public final DepartamentoEntity getDepartamento() {
         return departamento;
     }
 
-    public final CiudadEntity setDepartamento(final DepartamentoDTO departamento) {
-        this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoDTO());
+    public final CiudadEntity setDepartamento(final DepartamentoEntity departamento) {
+        this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoEntity());
         return this;
     }
 }

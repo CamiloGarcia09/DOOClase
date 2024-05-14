@@ -26,7 +26,14 @@ public enum CodigoMensaje {
     M00019(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00019", true),
     M00020(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00020", true),
     M00021(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00021", true),
-    M00022(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00022", true);
+    M00022(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00022", true),
+
+    //Mensajes creados por mi
+    M00023(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00023", true),
+    M00024(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00023", true),
+    M00025(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00023", true),
+    M00026(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00023", true),
+    M00027(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00023", true);
 
 
     private TipoMensaje tipo;
@@ -79,7 +86,4 @@ public enum CodigoMensaje {
         return concatenate(getTipo().name(), UNDERLINE, getCategoria().name(), UNDERLINE, getCodigo());
     }
 
-    public static void main(String[] args) {
-        System.out.println(M00001.getIdentificador());
-    }
 }

@@ -58,10 +58,23 @@ public final class MessageCatalogBase implements MessageCatalog {
 
         mensajes.put(CodigoMensaje.M00020.getIdentificador(), new Mensaje(CodigoMensaje.M00020,
                 "Se ha intentado iniciar una transacción con una conexión SQL cerrada..."));
-        mensajes.put(CodigoMensaje.M00021.getIdentificador(), new Mensaje(CodigoMensaje.M00022,
+        mensajes.put(CodigoMensaje.M00021.getIdentificador(), new Mensaje(CodigoMensaje.M00021,
                 "Se ha presentado un problema tratando de iniciar una transacción SQL con la fuente de información deseada..."));
         mensajes.put(CodigoMensaje.M00022.getIdentificador(), new Mensaje(CodigoMensaje.M00022,
                 "Se ha presentado un problema INESPERADO tratando de iniciar una transacción SQL con la fuente de información deseada..."));
+
+        //Mensajes creados por mi, no estoy seguro como si se implementa aqui o en el External
+        mensajes.put(CodigoMensaje.M00023.getIdentificador(), new Mensaje(CodigoMensaje.M00023,
+                "No es posible crear el DAO deseado con una conexion cerrada"));
+        mensajes.put(CodigoMensaje.M00024.getIdentificador(), new Mensaje(CodigoMensaje.M00024,
+                "Se ha presentado un problema tratando de crear la ciudad \"${1}\" por favor intente de nuevo y si el problema persiste contacte al administrador"));
+        mensajes.put(CodigoMensaje.M00025.getIdentificador(), new Mensaje(CodigoMensaje.M00025,
+                "Se ha presentado una excepcion de tipo SQLException tratando de realizar el insert de la ciudad \"${1}\" en la tabla \"Pais\" " +
+                        "de la base de datos Azure SQL. Para mas detalles revise de forma completa la excepcion raiz presentada... "));
+        mensajes.put(CodigoMensaje.M00026.getIdentificador(), new Mensaje(CodigoMensaje.M00026,
+                "Se ha presentado un problema tratando de crear la ciudad \"${1}\" por favor intente de nuevo y si el problema persiste contacte al administrador"));
+        mensajes.put(CodigoMensaje.M00027.getIdentificador(), new Mensaje(CodigoMensaje.M00027,
+                "Se ha presentado un problema inesperado con una excepcion de tipo Exception " ));
     }
 
     @Override
@@ -75,7 +88,7 @@ public final class MessageCatalogBase implements MessageCatalog {
 
         if (ObjectHelper.getObjectHelper().isNull(codigo)){
             var mensajeUsuario = obtenerCondidoMensaje(CodigoMensaje.M00002);
-            var mensajeTecnico = obtenerCondidoMensaje(CodigoMensaje.M00001);
+            var mensajeTecnico = obtenerCondidoMensaje(CodigoMensaje.M00001, codigo.getIdentificador());
             throw new CrosscuttingPCHException(mensajeTecnico, mensajeUsuario);
         }
         if (!codigo.isBase()){

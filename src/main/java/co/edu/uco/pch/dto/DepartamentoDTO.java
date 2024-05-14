@@ -2,6 +2,8 @@ package co.edu.uco.pch.dto;
 
 import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
+import co.edu.uco.pch.entity.PaisEntity;
+
 import java.util.UUID;
 
 //DTO = Data Transfer Object

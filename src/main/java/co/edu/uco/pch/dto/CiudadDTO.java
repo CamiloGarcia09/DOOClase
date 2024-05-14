@@ -1,6 +1,9 @@
 package co.edu.uco.pch.dto;
 
+import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
+import co.edu.uco.pch.entity.DepartamentoEntity;
+
 import java.util.UUID;
 
 //DTO = Data Transfer Object
@@ -47,7 +50,7 @@ public final class CiudadDTO {
     }
 
     public final CiudadDTO setDepartamento(final DepartamentoDTO departamento) {
-        this.departamento = departamento;
+        this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoDTO());
         return this;
     }
 }
