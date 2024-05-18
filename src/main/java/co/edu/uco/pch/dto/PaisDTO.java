@@ -5,6 +5,7 @@ import java.util.UUID;
 
 //DTO = Data Transfer Object
 public final class PaisDTO {
+
     private UUID id;
     private String nombre;
 

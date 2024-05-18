@@ -33,6 +33,4 @@ public class SqlConnection {
         }
         this.conexion = conexion;
     }
-
-
 }
