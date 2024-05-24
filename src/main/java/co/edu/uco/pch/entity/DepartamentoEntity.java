@@ -2,18 +2,22 @@ package co.edu.uco.pch.entity;
 
 import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
+import co.edu.uco.pch.crosscutting.helpers.UUIDHelper;
 import co.edu.uco.pch.dto.PaisDTO;
 
 import java.util.UUID;
 
 //DTO = Data Transfer Object
 public final class DepartamentoEntity {
+
     private UUID id;
     private String nombre;
     private PaisEntity pais;
 
     public DepartamentoEntity() {
-        super();
+        setId(UUIDHelper.getDefault());
+        setNombre(TextHelper.EMPTY);
+        setPais(PaisEntity.build());
     }
 
     public DepartamentoEntity(final UUID id, final String nombre, final PaisEntity pais) {
@@ -22,8 +26,7 @@ public final class DepartamentoEntity {
         setPais(pais);
     }
 
-    //Build significa crear en español
-    public static final DepartamentoEntity build (){
+    public static final DepartamentoEntity build() {
         return new DepartamentoEntity();
     }
 
@@ -40,7 +43,6 @@ public final class DepartamentoEntity {
         return nombre;
     }
 
-    //Aplicamos Helpers
     public final DepartamentoEntity setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
@@ -50,8 +52,7 @@ public final class DepartamentoEntity {
         return pais;
     }
 
-    //Aplicamos Helpers
-    public DepartamentoEntity setPais (final PaisEntity pais) {
+    public final DepartamentoEntity setPais(final PaisEntity pais) {
         this.pais = ObjectHelper.getObjectHelper().getDefaultValue(pais, new PaisEntity());
         return this;
     }

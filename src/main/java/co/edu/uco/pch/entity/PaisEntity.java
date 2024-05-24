@@ -1,16 +1,19 @@
 package co.edu.uco.pch.entity;
 
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
+import co.edu.uco.pch.crosscutting.helpers.UUIDHelper;
 
 import java.util.UUID;
 
 //DTO = Data Transfer Object
 public final class PaisEntity {
+
     private UUID id;
     private String nombre;
 
     public PaisEntity() {
-        super();
+        setId(UUIDHelper.getDefault());
+        setNombre(TextHelper.EMPTY);
     }
 
     public PaisEntity(final UUID id, final String nombre) {
@@ -18,8 +21,7 @@ public final class PaisEntity {
         setNombre(nombre);
     }
 
-    //Build significa crear en español
-    public static final PaisEntity build(){
+    public static final PaisEntity build() {
         return new PaisEntity();
     }
 

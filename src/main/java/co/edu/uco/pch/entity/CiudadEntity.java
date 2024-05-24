@@ -2,6 +2,7 @@ package co.edu.uco.pch.entity;
 
 import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
+import co.edu.uco.pch.crosscutting.helpers.UUIDHelper;
 import co.edu.uco.pch.dto.DepartamentoDTO;
 import co.edu.uco.pch.dto.PaisDTO;
 
@@ -14,7 +15,9 @@ public final class CiudadEntity {
     private DepartamentoEntity departamento;
 
     public CiudadEntity() {
-        super();
+        setId(UUIDHelper.getDefault());
+        setNombre(TextHelper.EMPTY);
+        setDepartamento(DepartamentoEntity.build());
     }
 
     public CiudadEntity(final UUID id, final String nombre, final DepartamentoEntity departamento) {
@@ -23,8 +26,7 @@ public final class CiudadEntity {
         setDepartamento(departamento);
     }
 
-    //Build significa crear en español
-    public static final CiudadEntity build(){
+    public static final CiudadEntity build() {
         return new CiudadEntity();
     }
 
@@ -43,6 +45,7 @@ public final class CiudadEntity {
 
     public final CiudadEntity setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
+        ;
         return this;
     }
 
@@ -54,4 +57,6 @@ public final class CiudadEntity {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoEntity());
         return this;
     }
+
 }
+

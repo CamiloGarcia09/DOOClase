@@ -1,6 +1,5 @@
 package co.edu.uco.pch.business.usecase.impl.ciudad;
 
-import co.edu.uco.pch.business.assembler.entity.impl.CiudadAssemblerEntity;
 import co.edu.uco.pch.business.assembler.entity.impl.DepartamentoAssemblerEntity;
 import co.edu.uco.pch.business.domain.CiudadDomain;
 import co.edu.uco.pch.business.usecase.UseCaseWithoutReturn;
