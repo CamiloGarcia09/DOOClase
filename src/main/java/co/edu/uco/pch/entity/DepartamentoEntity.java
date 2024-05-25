@@ -1,13 +1,11 @@
 package co.edu.uco.pch.entity;
 
+import java.util.UUID;
+
 import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
 import co.edu.uco.pch.crosscutting.helpers.UUIDHelper;
-import co.edu.uco.pch.dto.PaisDTO;
 
-import java.util.UUID;
-
-//DTO = Data Transfer Object
 public final class DepartamentoEntity {
 
     private UUID id;

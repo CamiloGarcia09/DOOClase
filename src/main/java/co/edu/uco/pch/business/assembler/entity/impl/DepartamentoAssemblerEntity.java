@@ -6,6 +6,8 @@ import co.edu.uco.pch.business.domain.PaisDomain;
 import co.edu.uco.pch.entity.DepartamentoEntity;
 import co.edu.uco.pch.entity.PaisEntity;
 
+import java.util.List;
+
 
 public class DepartamentoAssemblerEntity implements AssemblerEntity<DepartamentoDomain, DepartamentoEntity>{
 
@@ -26,7 +28,14 @@ public class DepartamentoAssemblerEntity implements AssemblerEntity<Departamento
     }
 
     @Override
+    public List<DepartamentoDomain> toDomainCollection(List<DepartamentoEntity> entityCollection) {
+        return List.of();
+    }
+
+    @Override
     public DepartamentoEntity toEntity(DepartamentoDomain domain) {
         return null;
     }
+
+
 }

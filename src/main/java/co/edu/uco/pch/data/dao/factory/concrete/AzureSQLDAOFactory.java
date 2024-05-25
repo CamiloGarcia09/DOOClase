@@ -2,7 +2,6 @@ package co.edu.uco.pch.data.dao.factory.concrete;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import co.edu.uco.pch.crosscutting.exceptions.custom.DataPCHException;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
@@ -112,4 +111,5 @@ public final class AzureSQLDAOFactory extends SqlConnection implements DAOFactor
 			excepcion.printStackTrace();
 		}
 	}
+
 }

@@ -1,6 +1,8 @@
 package co.edu.uco.pch.dto;
 
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
+import co.edu.uco.pch.crosscutting.helpers.UUIDHelper;
+
 import java.util.UUID;
 
 //DTO = Data Transfer Object
@@ -11,6 +13,8 @@ public final class PaisDTO {
 
     public PaisDTO() {
         super();
+        setId(UUIDHelper.getDefault());
+        setNombre(TextHelper.EMPTY);
     }
 
     public PaisDTO(final UUID id, final String nombre) {

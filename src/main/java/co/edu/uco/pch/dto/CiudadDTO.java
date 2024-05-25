@@ -2,6 +2,7 @@ package co.edu.uco.pch.dto;
 
 import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
+import co.edu.uco.pch.crosscutting.helpers.UUIDHelper;
 import co.edu.uco.pch.entity.DepartamentoEntity;
 
 import java.util.UUID;
@@ -11,9 +12,12 @@ public final class CiudadDTO {
     private UUID id;
     private String nombre;
     private DepartamentoDTO departamento;
-
+//Esto es para probar
     public CiudadDTO() {
         super();
+        setId(UUIDHelper.getDefault());
+        setNombre(TextHelper.EMPTY);
+        setDepartamento(DepartamentoDTO.build());
     }
 
     public CiudadDTO(final UUID id, final String nombre, final DepartamentoDTO departamento) {

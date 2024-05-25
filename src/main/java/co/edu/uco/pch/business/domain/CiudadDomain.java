@@ -18,7 +18,7 @@ public class CiudadDomain {
         setDepartamento(departamento);
     }
 
-    private static final CiudadDomain build(final UUID id, final String nombre, final DepartamentoDomain departamento){
+    public static final CiudadDomain build(final UUID id, final String nombre, final DepartamentoDomain departamento){
         return new CiudadDomain(id, nombre, departamento);
     }
 
