@@ -2,6 +2,8 @@ package co.edu.uco.pch.data.dao.factory.concrete;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import co.edu.uco.pch.crosscutting.exceptions.PCHException;
 import co.edu.uco.pch.crosscutting.exceptions.custom.DataPCHException;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
@@ -29,9 +31,11 @@ public final class AzureSQLDAOFactory extends SqlConnection implements DAOFactor
 		final String connectionUrl = "jdbc:sqlserver://wednesday.database.windows.net:1433;databaseName=friday;user=fridayDmlUser;password=fr1d4yus3r!";
 		try {
 			setConexion(DriverManager.getConnection(connectionUrl));
+		} catch (final PCHException excepcion) {
+			throw excepcion;
 		} catch (final SQLException excepcion) {
 			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
-			var mensajeTecnico = "Se ha presentado un problema tratando de obtener la conexión con la base de datos wednesday en el servidor de bases de datos wednesday.database.windows.net. Por favor revise la traza de errores para identificar y solucionar el problema...";
+			var mensajeTecnico = "Se ha presentado un problema trat  ando de obtener la conexión con la base de datos wednesday en el servidor de bases de datos wednesday.database.windows.net. Por favor revise la traza de errores para identificar y solucionar el problema...";
 
 			throw new DataPCHException(mensajeTecnico, mensajeUsuario, excepcion);
 		} catch (final Exception excepcion) {
@@ -75,41 +79,6 @@ public final class AzureSQLDAOFactory extends SqlConnection implements DAOFactor
 	@Override
 	public CiudadDAO getCiudadDAO() {
 		return new CiudadAzureSqlDAO(getConexion());
-	}
-
-	public static void main(String[] args) {
-		try {
-			DAOFactory factory = DAOFactory.getFactory();
-
-			System.out.println("Iniciando transacción...");
-			factory.iniciarTransaccion();
-
-			System.out.println("Creando ciudad aleatoriamente");
-			DepartamentoEntity departamento = DepartamentoEntity.build()
-					.setId(UUIDHelper.convertToUUID("7827155D-0A6B-4D6E-9807-C5B7097D94F0"));
-			CiudadEntity ciudad = CiudadEntity.build().setId(UUIDHelper.generate())
-					.setNombre("Rionegro-" + UUIDHelper.generate()).setDepartamento(departamento);
-
-			factory.getCiudadDAO().crear(ciudad);
-
-			System.out.println("Consultamos ciudades: ");
-			var resultados = factory.getCiudadDAO().consultar(CiudadEntity.build());
-
-			for (CiudadEntity ciudadEntity : resultados) {
-				System.out.println("idCiudad: " + ciudadEntity.getId() + ", nombreCiudad: " + ciudadEntity.getNombre()
-						+ ", idDepartamento: " + ciudadEntity.getDepartamento().getId() + ", nombreDepartamento: "
-						+ ciudadEntity.getDepartamento().getNombre() + ", idPais: "
-						+ ciudadEntity.getDepartamento().getPais().getId() + ", nombrePais: "
-						+ ciudadEntity.getDepartamento().getPais().getNombre());
-			}
-
-			System.out.println("Confirmando transacción...");
-			factory.confirmarTransaccion();
-			System.out.println("Cerrando conexión...");
-			factory.cerrarConexion();
-		} catch (final Exception excepcion) {
-			excepcion.printStackTrace();
-		}
 	}
 
 }

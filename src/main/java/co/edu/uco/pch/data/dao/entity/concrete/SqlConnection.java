@@ -25,7 +25,7 @@ public class SqlConnection {
 
     protected final void setConexion(final Connection conexion) {
 
-        if (SQLHelper.isOpen(conexion)){
+        if (!SQLHelper.isOpen(conexion)){
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
             var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00023);
 
