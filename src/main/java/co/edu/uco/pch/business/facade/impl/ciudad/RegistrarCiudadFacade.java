@@ -8,36 +8,39 @@ import co.edu.uco.pch.crosscutting.exceptions.custom.BusinessPCHException;
 import co.edu.uco.pch.data.dao.factory.DAOFactory;
 import co.edu.uco.pch.dto.CiudadDTO;
 
-public final class RegistrarCiudadFacade implements FacadaWithoutReturn <CiudadDTO> {
+public final class RegistrarCiudadFacade implements FacadaWithoutReturn<CiudadDTO> {
 
     private DAOFactory daoFactory;
 
-    public RegistrarCiudadFacade (){
-        daoFactory = DAOFactory.getFactory();
+    public RegistrarCiudadFacade() {
+        daoFactory= DAOFactory.getFactory();
     }
 
     @Override
-    public void execute(CiudadDTO dto) {
-        daoFactory.iniciarTransaccion();
-        try{
+    public void execute(final CiudadDTO dto) {
 
-            var useCase = new RegistrarCiudad(daoFactory);
-            var ciudadDomain = CiudadAssemblerDTO.getInstance().toDomain(dto);
+        daoFactory.iniciarTransaccion();
+
+        try {
+            var useCase=new RegistrarCiudad(daoFactory);
+            var ciudadDomain= CiudadAssemblerDTO.getInstance().toDomain(dto);
             useCase.execute(ciudadDomain);
+            //Ejecutar caso de uso
 
             daoFactory.confirmarTransaccion();
-        }catch (final PCHException exception){
+        }catch(final PCHException excepcion){
             daoFactory.cancelarTransaccion();
-            throw exception;
-        }catch (final Exception exception){
+            throw excepcion;
+        }catch(final Exception excepcion) {
             daoFactory.cancelarTransaccion();
 
-            var mensajeUsuario = "Se ha presentado un porblema tratando de registarr la infomacion de la ciudad";
-            var mensajeTecnico = "Se ha presentado un porblema inesperado tratando de registrar la informacion de las ciudadees";
+            var mensajeUsuario=("Se ha presentado un problema tratando de registrar la información");
+            var mensajeTecnico=("Se ha presentado un problema INESPERADO tratando de registrar la información");
 
-            throw new BusinessPCHException(mensajeTecnico, mensajeUsuario, exception);
-        }finally {
+            throw new BusinessPCHException(mensajeTecnico,mensajeUsuario, excepcion);
+        } finally {
             daoFactory.cerrarConexion();
         }
     }
+
 }

@@ -27,15 +27,16 @@ public class CiudadAssemblerEntity implements AssemblerEntity<CiudadDomain, Ciud
     public static final AssemblerEntity<CiudadDomain, CiudadEntity> getInstance(){
         return instance;
     }
+
     @Override
-    public CiudadDomain toDomain(CiudadEntity data) {
+    public final CiudadDomain toDomain(final CiudadEntity data) {
         var ciudadEntityTmp = getObjectHelper().getDefaultValue(data, CiudadEntity.build());
         var departamentoDomain = departamentoAssembler.toDomain(ciudadEntityTmp.getDepartamento());
         return CiudadDomain.build(ciudadEntityTmp.getId(),ciudadEntityTmp.getNombre(),departamentoDomain);
     }
 
     @Override
-    public CiudadEntity toEntity(CiudadDomain domain) {
+    public final CiudadEntity toEntity(final CiudadDomain domain) {
         var ciudadDomainTmp = getObjectHelper().getDefaultValue(domain, CiudadDomain.build());
         var departamentoEntity = departamentoAssembler.toEntity(ciudadDomainTmp.getDepartamento());
         return CiudadEntity.build().setId(ciudadDomainTmp.getId()).setNombre(ciudadDomainTmp.getNombre()).setDepartamento(departamentoEntity);

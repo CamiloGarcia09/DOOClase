@@ -25,6 +25,7 @@ public class CiudadAssemblerDTO implements AssemblerDTO<CiudadDomain, CiudadDTO>
     public static final AssemblerDTO<CiudadDomain, CiudadDTO> getInstance(){
         return instance;
     }
+
     @Override
     public CiudadDomain toDomain(CiudadDTO data) {
         var ciudadDTOTmp = getObjectHelper().getDefaultValue(data, CiudadDTO.build());
