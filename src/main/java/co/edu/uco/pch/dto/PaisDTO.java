@@ -31,13 +31,13 @@ public final class PaisDTO {
         return id;
     }
 
-    public final PaisDTO setId(final UUID id) {
-        this.id = id;
-        return this;
-    }
-
     public final String getNombre() {
         return nombre;
+    }
+
+    public final PaisDTO setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+        return this;
     }
 
     public final PaisDTO setNombre(final String nombre) {

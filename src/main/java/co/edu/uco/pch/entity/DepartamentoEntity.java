@@ -32,22 +32,22 @@ public final class DepartamentoEntity {
         return id;
     }
 
-    public final DepartamentoEntity setId(final UUID id) {
-        this.id = id;
-        return this;
-    }
-
     public final String getNombre() {
         return nombre;
+    }
+
+    public final PaisEntity getPais() {
+        return pais;
+    }
+
+    public final DepartamentoEntity setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+        return this;
     }
 
     public final DepartamentoEntity setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
-    }
-
-    public final PaisEntity getPais() {
-        return pais;
     }
 
     public final DepartamentoEntity setPais(final PaisEntity pais) {

@@ -31,23 +31,22 @@ public final class CiudadEntity {
         return id;
     }
 
-    public final CiudadEntity setId(final UUID id) {
-        this.id = id;
-        return this;
-    }
-
     public final String getNombre() {
         return nombre;
     }
 
-    public final CiudadEntity setNombre(final String nombre) {
-        this.nombre = TextHelper.applyTrim(nombre);
-        ;
+    public final DepartamentoEntity getDepartamento() {
+        return departamento;
+    }
+
+    public final CiudadEntity setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final DepartamentoEntity getDepartamento() {
-        return departamento;
+    public final CiudadEntity setNombre(final String nombre) {
+        this.nombre = TextHelper.applyTrim(nombre);
+        return this;
     }
 
     public final CiudadEntity setDepartamento(final DepartamentoEntity departamento) {

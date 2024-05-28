@@ -36,22 +36,22 @@ public final class DepartamentoDTO {
         return id;
     }
 
-    public final DepartamentoDTO setId(final UUID id) {
-        this.id = id;
-        return this;
-    }
-
     public final String getNombre() {
         return nombre;
+    }
+
+    public final PaisDTO getPais() {
+        return pais;
+    }
+
+    public final DepartamentoDTO setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+        return this;
     }
 
     public final DepartamentoDTO setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
-    }
-
-    public final PaisDTO getPais() {
-        return pais;
     }
 
     public DepartamentoDTO setPais (final PaisDTO pais) {

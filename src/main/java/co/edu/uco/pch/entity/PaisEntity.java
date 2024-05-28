@@ -11,6 +11,7 @@ public final class PaisEntity {
     private String nombre;
 
     public PaisEntity() {
+        super();
         setId(UUIDHelper.getDefault());
         setNombre(TextHelper.EMPTY);
     }
@@ -28,13 +29,13 @@ public final class PaisEntity {
         return id;
     }
 
-    public final PaisEntity setId(final UUID id) {
-        this.id = id;
-        return this;
-    }
-
     public final String getNombre() {
         return nombre;
+    }
+
+    public final PaisEntity setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+        return this;
     }
 
     public final PaisEntity setNombre(final String nombre) {
