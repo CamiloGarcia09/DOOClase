@@ -27,14 +27,14 @@ public class CiudadAssemblerDTO implements AssemblerDTO<CiudadDomain, CiudadDTO>
     }
 
     @Override
-    public CiudadDomain toDomain(CiudadDTO data) {
+    public final CiudadDomain toDomain(final CiudadDTO data) {
         var ciudadDTOTmp = getObjectHelper().getDefaultValue(data, CiudadDTO.build());
         var departamentoDomain = departamentoAssembler.toDomain(ciudadDTOTmp.getDepartamento());
         return CiudadDomain.build(ciudadDTOTmp.getId(),ciudadDTOTmp.getNombre(),departamentoDomain);
     }
 
     @Override
-    public CiudadDTO toDTO(CiudadDomain domain) {
+    public final CiudadDTO toDTO(final CiudadDomain domain) {
         var ciudadDomainTmp = getObjectHelper().getDefaultValue(domain, CiudadDomain.build());
         var departamentoDTO = departamentoAssembler.toDTO(ciudadDomainTmp.getDepartamento());
         return CiudadDTO.build().setId(ciudadDomainTmp.getId()).setNombre(ciudadDomainTmp.getNombre()).setDepartamento(departamentoDTO);

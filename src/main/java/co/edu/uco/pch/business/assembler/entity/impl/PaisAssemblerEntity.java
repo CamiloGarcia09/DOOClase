@@ -1,10 +1,13 @@
 package co.edu.uco.pch.business.assembler.entity.impl;
 
 import co.edu.uco.pch.business.assembler.entity.AssemblerEntity;
+import co.edu.uco.pch.business.domain.DepartamentoDomain;
 import co.edu.uco.pch.business.domain.PaisDomain;
 import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
+import co.edu.uco.pch.entity.DepartamentoEntity;
 import co.edu.uco.pch.entity.PaisEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PaisAssemblerEntity implements AssemblerEntity<PaisDomain, PaisEntity>{
@@ -32,7 +35,21 @@ public class PaisAssemblerEntity implements AssemblerEntity<PaisDomain, PaisEnti
     }
 
     @Override
-    public List<PaisDomain> toDomainCollection(List<PaisEntity> entityCollection) {
-        return null;
+    public final  List<PaisDomain> toDomainCollection(final List<PaisEntity> entityCollection) {
+        var entityCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(entityCollection, new ArrayList<PaisEntity>());
+
+        var resultadosDomain = new ArrayList<PaisDomain>();
+
+        for (PaisEntity paisEntity : entityCollectionTmp) {
+            var paisDomainTmp = toDomain(paisEntity);
+            resultadosDomain.add(paisDomainTmp);
+        }
+        return resultadosDomain;
+    }
+
+    @Override
+    public final List<PaisEntity> toEntityCollection(final List<PaisDomain> domainCollection) {
+        var domainCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(domainCollection, new ArrayList<PaisDomain>());
+        return domainCollectionTmp.stream().map(this::toEntity).toList();
     }
 }

@@ -30,18 +30,6 @@ public class CiudadDomain {
         return new CiudadDomain(UUIDHelper.getDefault(), TextHelper.EMPTY, DepartamentoDomain.build());
     }
 
-    private void setId(final UUID id) {
-        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
-    }
-
-    private void setNombre(final String nombre) {
-        this.nombre = TextHelper.applyTrim(nombre);
-    }
-
-    private void setDepartamento(final DepartamentoDomain pais) {
-        this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, DepartamentoDomain.build());
-    }
-
     public UUID getId() {
         return id;
     }
@@ -54,4 +42,15 @@ public class CiudadDomain {
         return departamento;
     }
 
+    private void setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+    }
+
+    private void setNombre(final String nombre) {
+        this.nombre = TextHelper.applyTrim(nombre);
+    }
+
+    private void setDepartamento(final DepartamentoDomain departamento) {
+        this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, DepartamentoDomain.build());
+    }
 }

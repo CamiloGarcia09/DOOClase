@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import co.edu.uco.pch.dto.CiudadDTO;
 import co.edu.uco.pch.entity.CiudadEntity;
 import co.edu.uco.pch.entity.DepartamentoEntity;
 
@@ -46,8 +47,18 @@ public class CiudadAssemblerEntity implements AssemblerEntity<CiudadDomain, Ciud
     public final List<CiudadDomain> toDomainCollection(final List<CiudadEntity> entityCollection) {
         var entityCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(entityCollection, new ArrayList<CiudadEntity>());
 
-        return entityCollectionTmp.stream().map(this::toDomain).toList();
+        var resultadosDomain = new ArrayList<CiudadDomain>();
 
+        for (CiudadEntity ciudadEntity : entityCollectionTmp) {
+            var ciudadDomainTmp = toDomain(ciudadEntity);
+            resultadosDomain.add(ciudadDomainTmp);
+        }
+        return resultadosDomain;
     }
 
+    @Override
+    public final List<CiudadEntity> toEntityCollection(final List<CiudadDomain> domainCollection) {
+        var domainCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(domainCollection, new ArrayList<CiudadDomain>());
+        return domainCollectionTmp.stream().map(this::toEntity).toList();
+    }
 }

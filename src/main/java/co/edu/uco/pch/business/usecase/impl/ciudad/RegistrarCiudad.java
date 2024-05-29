@@ -8,18 +8,20 @@ import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.pch.crosscutting.helpers.UUIDHelper;
 import co.edu.uco.pch.data.dao.factory.DAOFactory;
 import co.edu.uco.pch.entity.CiudadEntity;
-import co.edu.uco.pch.entity.DepartamentoEntity;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public final class RegistrarCiudad implements UseCaseWithoutReturn<CiudadDomain> {
 
-    private DAOFactory factory;
+    private final DAOFactory factory;
+    private static final Pattern NOMBRE_PATTERN = Pattern.compile("^[a-zA-Z\\s]+$");
 
-    public RegistrarCiudad(final DAOFactory factory){
-        if(ObjectHelper.getObjectHelper().isNull(factory)){
-            var mensajeUsuario = "Se ha presentado un porblema tratando de llevar a cabo el registro de una ciudad";
-            var mensajeTecnico = "El DAOFactory para crear la ciudad llego nulo...";
+    public RegistrarCiudad(final DAOFactory factory) {
+        if (ObjectHelper.getObjectHelper().isNull(factory)) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de llevar a cabo el registro de una ciudad";
+            var mensajeTecnico = "El DAOFactory para crear la ciudad llegó nulo.";
             throw new BusinessPCHException(mensajeTecnico, mensajeUsuario);
         }
         this.factory = factory;
@@ -27,42 +29,53 @@ public final class RegistrarCiudad implements UseCaseWithoutReturn<CiudadDomain>
 
     @Override
     public void execute(final CiudadDomain data) {
-        // 1. Validar que los casos de uso sean correctos a nivel de tipo de dato, longitutd, obligateriodidad, formato, rango, etc...
-        // 2. Validar que no exista otra ciudad con el mismo nombre para el mismo departamento
-        validarCiudadMismoNombreMismoDepartamento(data.getNombre(), data.getDepartamento().getId());
+        validarDatosCiudad(data);
+        validarCiudadMismoNombre(data.getNombre());
+        UUID ciudadId = generarIdentificadorCiudad();
 
-        // 3. Validar que no exista otra ciudad con el mismo identificador
-        var ciudadEntity = CiudadEntity.build().setId(generarIdentificadorCiudad()).setNombre
-                        (data.getNombre()).setDepartamento(DepartamentoAssemblerEntity.
-                        getInstance().toEntity(data.getDepartamento()));
-        // 4. Guardar la nueva ciudad
+        var ciudadEntity = CiudadEntity.build()
+                .setId(ciudadId)
+                .setNombre(data.getNombre())
+                .setDepartamento(DepartamentoAssemblerEntity.getInstance().toEntity(data.getDepartamento()));
 
         factory.getCiudadDAO().crear(ciudadEntity);
     }
 
-    private final UUID generarIdentificadorCiudad(){
-        UUID id = UUIDHelper.generate();
-        boolean existeId = true;
+    private UUID generarIdentificadorCiudad() {
+        UUID id;
+        boolean existeId;
 
-        while(existeId){
+        do {
             id = UUIDHelper.generate();
             var ciudadEntity = CiudadEntity.build().setId(id);
-            var resultados = factory.getCiudadDAO().consultar(ciudadEntity);
-
+            List<CiudadEntity> resultados = factory.getCiudadDAO().consultar(ciudadEntity);
             existeId = !resultados.isEmpty();
-        }
+        } while (existeId);
+
         return id;
     }
 
-    private final void validarCiudadMismoNombreMismoDepartamento(final String nombreCiudad, final UUID idDepartamento){
-        var ciudadEntity = CiudadEntity.build().setNombre(nombreCiudad).
-                setDepartamento(DepartamentoEntity.build().setId(idDepartamento));
-        var resultados = factory.getCiudadDAO().consultar(ciudadEntity);
+    private void validarCiudadMismoNombre(final String nombreCiudad) {
+        var ciudadEntity = CiudadEntity.build().setNombre(nombreCiudad);
+        List<CiudadEntity> resultados = factory.getCiudadDAO().consultar(ciudadEntity);
 
-        if (!resultados.isEmpty()){
-            var mensajeUsuario= "Ya existe una ciudad con el nombre \"${1}\" asociado con el departamento deseado " ;
-            throw new BusinessPCHException(mensajeUsuario);
+        if (!resultados.isEmpty()) {
+            var mensajeUsuario = String.format("Ya existe una ciudad con el nombre \"%s\".", nombreCiudad);
+            var mensajeTecnico = String.format("Se intentó registrar una ciudad con el nombre \"%s\", pero ya existe una ciudad con el mismo nombre.", nombreCiudad);
+            throw new BusinessPCHException(mensajeTecnico, mensajeUsuario);
+        }
+    }
 
+    private void validarDatosCiudad(CiudadDomain data) {
+
+        if (ObjectHelper.getObjectHelper().isNull(data.getNombre()) || data.getNombre().trim().isEmpty()) {
+            throw new BusinessPCHException("El nombre de la ciudad está vacío.", "Debe proporcionar un nombre válido para la ciudad.");
+        }
+        if (!NOMBRE_PATTERN.matcher(data.getNombre()).matches()) {
+            throw new BusinessPCHException("El nombre de la ciudad contiene caracteres inválidos.", "El nombre de la ciudad solo puede contener letras y espacios.");
+        }
+        if (ObjectHelper.getObjectHelper().isNull(data.getDepartamento()) || ObjectHelper.getObjectHelper().isNull(data.getDepartamento().getId())) {
+            throw new BusinessPCHException("El departamento de la ciudad es nulo.", "Debe proporcionar un departamento válido para la ciudad.");
         }
     }
 }

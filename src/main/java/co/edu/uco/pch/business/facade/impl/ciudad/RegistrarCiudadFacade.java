@@ -25,7 +25,6 @@ public final class RegistrarCiudadFacade implements FacadaWithoutReturn<CiudadDT
             var useCase=new RegistrarCiudad(daoFactory);
             var ciudadDomain= CiudadAssemblerDTO.getInstance().toDomain(dto);
             useCase.execute(ciudadDomain);
-            //Ejecutar caso de uso
 
             daoFactory.confirmarTransaccion();
         }catch(final PCHException excepcion){

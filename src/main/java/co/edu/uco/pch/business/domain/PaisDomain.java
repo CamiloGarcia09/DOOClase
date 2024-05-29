@@ -27,19 +27,19 @@ public final class PaisDomain {
         return new PaisDomain(UUIDHelper.getDefault(), TextHelper.EMPTY);
     }
 
-    private final void setId(final UUID id) {
-        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
-    }
-
-    private final void setNombre(final String nombre) {
-        this.nombre = TextHelper.applyTrim(nombre);
-    }
-
     public final UUID getId() {
         return id;
     }
 
     public final String getNombre() {
         return nombre;
+    }
+
+    private final void setId(final UUID id) {
+        this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
+    }
+
+    private final void setNombre(final String nombre) {
+        this.nombre = TextHelper.applyTrim(nombre);
     }
 }
